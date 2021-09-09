@@ -1,0 +1,19 @@
+
+.colorBanner {
+    background: #333;
+    display: block;
+    border-radius: 6px;
+    text-decoration: none;
+    padding: 13px 17px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.colorBanner:last-child {
+    margin-bottom: 0;
+}
+
+.issueBanner__state {
+    font-weight: 600;
+    font-size: 12px;
+}

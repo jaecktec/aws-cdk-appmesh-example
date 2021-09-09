@@ -1,0 +1,24 @@
+{
+  "name": "@web-client/gateway",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "ts-node ./src/index.ts",
+    "start": "nodemon -e ts -w ./src -x yarn serve",
+    "build": "tsc -p tsconfig.build.json",
+    "bundle": "yarn run build && yarn install --production --modules-folder ./prod-node-modules"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/express-http-proxy": "^1.6.2",
+    "@types/node": "^16.6.1",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  }
+}

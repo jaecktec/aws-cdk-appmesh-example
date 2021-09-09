@@ -1,0 +1,25 @@
+{
+  "name": "web-client",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "client": "yarn workspace @web-client/client start",
+    "gateway": "yarn workspace @web-client/gateway start",
+    "start": "concurrently --kill-others-on-fail \"yarn gateway\"  \"yarn client\"",
+    "bundle:make-out-dir": "mkdir bundle",
+    "bundle:copy-prod-node-modules": "mv ./gateway/prod-node-modules ./bundle/node_modules",
+    "bundle:copy-gateway-dist": "mv ./gateway/build ./bundle",
+    "bundle:copy-web-content": " mv ./client/build ./bundle/public",
+    "build": "yarn workspace @web-client/gateway bundle && yarn workspace @web-client/client build",
+    "bundle": "yarn build && yarn bundle:make-out-dir && yarn bundle:copy-prod-node-modules && yarn bundle:copy-gateway-dist && yarn bundle:copy-web-content"
+  },
+  "workspaces": [
+    "client",
+    "gateway"
+  ],
+  "devDependencies": {
+    "concurrently": "^6.2.1"
+  }
+}
