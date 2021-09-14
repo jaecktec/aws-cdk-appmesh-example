@@ -1,11 +1,8 @@
-import { Repository } from '@aws-cdk/aws-ecr';
-import { Aws, CfnOutput, Construct, Duration, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core';
-import { IVpc, Port, SecurityGroup, SubnetType, Vpc } from '@aws-cdk/aws-ec2';
-import { AwsLogDriver, Cluster, ContainerImage, FargateService, FargateTaskDefinition, UlimitName } from '@aws-cdk/aws-ecs';
-import { ApplicationListener, ApplicationLoadBalancer, ApplicationProtocol, ListenerCondition, Protocol as ELBProtocol } from '@aws-cdk/aws-elasticloadbalancingv2';
-import { DnsRecordType, PrivateDnsNamespace } from '@aws-cdk/aws-servicediscovery';
-import { Mesh, VirtualGateway, VirtualGatewayListener } from '@aws-cdk/aws-appmesh';
-import { ManagedPolicy } from '@aws-cdk/aws-iam';
+import { Port, SecurityGroup, SubnetType, Vpc } from '@aws-cdk/aws-ec2';
+import { AwsLogDriver, Cluster, ContainerImage, FargateService, FargateTaskDefinition } from '@aws-cdk/aws-ecs';
+import { ApplicationLoadBalancer, ApplicationProtocol, Protocol as ELBProtocol } from '@aws-cdk/aws-elasticloadbalancingv2';
+import { PrivateDnsNamespace } from '@aws-cdk/aws-servicediscovery';
+import { CfnOutput, Construct, Duration, Stack, StackProps } from '@aws-cdk/core';
 import { resolve } from 'path';
 
 
@@ -13,7 +10,7 @@ export class InfrastructureStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // fargate cluster
+    // fargate clusterø
     const vpc = Vpc.fromLookup(this, 'default-vpc', { isDefault: true });
     const cluster = new Cluster(this, 'Cluster', {
       vpc: vpc,
@@ -108,12 +105,9 @@ export class InfrastructureStack extends Stack {
         securityGroupName: `${id}-fargate-service`,
         vpc: cluster.vpc,
       })],
-      // enables our service to be detectable by the id
       cloudMapOptions: {
         name: id,
         cloudMapNamespace: namespace,
-        dnsTtl: Duration.seconds(10),
-        dnsRecordType: DnsRecordType.A,
         containerPort: appPort,
       },
     });
